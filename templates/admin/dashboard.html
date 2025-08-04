@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<ul class="list-group">
+  <li class="list-group-item">
+    <a href="{{ url_for('admin.view_users') }}" class="btn btn-secondary w-100" >Manage Users & Merchants</a>
+  </li>
+  <li class="list-group-item">
+    <a href="{{ url_for('admin.view_products') }}" class="btn btn-secondary w-100">View All Products</a>
+  </li>
+  <li class="list-group-item">
+    <a href="{{ url_for('admin.view_orders') }}" class="btn btn-secondary w-100">View All Orders</a>
+  </li>
+</ul>
+{% endblock %}

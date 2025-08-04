@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Your Cart</h2>
+
+  <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endwith %} -->
+
+  {% if cart and cart|length > 0 %}
+  <table class="table table-bordered mt-3">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>₹{{ item.product.price }}</td>
+        <td>₹{{ item.subtotal }}</td>
+        <td>
+          <a href="{{ url_for('user.remove_from_cart', product_id=item.product.id) }}" class="btn btn-sm btn-danger">Remove</a>
+        </td>
+      </tr>
+      {% endfor %}
+      <!-- <tr>
+        <!-- <td colspan="3" class="text-end"><strong>Total:</strong></td> -->
+        <!-- <td colspan="2"><strong>₹{{ total }}</strong></td> -->
+      </tr> 
+    </tbody>
+  </table>
+  {% else %}
+    <p class="text-muted mt-4">🛒 Your cart is empty.</p>
+  {% endif %}
+  <!-- ✅ Back to Home Button -->
+  <div class="mt-4 text-end">
+    <a href="{{ url_for('user.home') }}" class="btn btn-secondary">← Back to Home</a>
+  </div>
+</div>
+{% endblock %}

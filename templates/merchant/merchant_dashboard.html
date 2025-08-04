@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>My Products</h2>
+
+<form method="POST" action="{{ url_for('merchant.add_product') }}" class="mb-4 card p-3">
+  <h5>Add New Product</h5>
+  <div class="row">
+    <div class="col">
+      <input name="name" class="form-control" placeholder="Product Name" required>
+    </div>
+    <div class="col">
+      <input name="price" type="number" class="form-control" placeholder="Price" required>
+    </div>
+    <div class="col">
+      <input name="stock" type="number" class="form-control" placeholder="Stock" required>
+    </div>
+    <div class="col">
+      <button class="btn btn-primary">Add</button>
+    </div>
+  </div>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in products %}
+    <tr>
+      <td>{{ p.name }}</td>
+      <td>₹{{ p.price }}</td>
+      <td>{{ p.stock }}</td>
+      <td>
+        <form action="{{ url_for('merchant.restock', product_id=p.id) }}" method="POST" class="d-inline">
+          <input name="quantity" type="number" min="1" style="width:70px;" required>
+          <button class="btn btn-sm btn-warning">Restock</button>
+        </form>
+        <a href="{{ url_for('merchant.delete_product', product_id=p.id) }}" class="btn btn-sm btn-danger">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{{ url_for('merchant.view_orders') }}" class="btn btn-success">View Orders</a>
+{% endblock %}

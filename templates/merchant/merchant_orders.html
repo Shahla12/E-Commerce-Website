@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Orders on Your Products</h2>
+
+{% if orders %}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Customer</th>
+      <th>Details</Details></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <td>{{ order.product_name }}</td>
+      <td>{{ order.quantity }}</td>
+      <td>{{ order.buyer }}</td>
+      <td>{{ order.timestamp.strftime('%Y-%m-%d , %H:%M') }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No orders yet.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}Order History{% endblock %}
+
+{% block content %}
+<h2>Your Order History</h2>
+
+{% if orders %}
+    <table class="table table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Product Name</th>
+                <th>Price (₹)</th>
+                <th>Quantity</th>
+                <th>Total (₹)</th>
+                <th>Ordered On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.product.name }}</td>
+                <td>{{ order.product.price }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.product.price * order.quantity }}</td>
+                <td>{{ order.timestamp.strftime('%Y-%m-%d , %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-info mt-3">
+        You have not placed any orders yet.
+    </div>
+{% endif %}
+<!-- ✅ Back to Home Button -->
+  <div class="mt-4 text-end">
+    <a href="{{ url_for('user.home') }}" class="btn btn-secondary">← Back to Home</a>
+  </div>
+{% endblock %}

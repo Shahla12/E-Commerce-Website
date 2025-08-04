@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h3>Users & Merchants</h3>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in users + merchants %}
+      <tr>
+        <td>{{ u.username }}</td>
+        <td>{{ u.role.title() }}</td>
+        <td>
+          {% if u.approved %}
+            <span class="badge bg-success">Approved</span>
+          {% else %}
+            <span class="badge bg-warning text-dark">Pending</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if not u.approved %}
+            <a href="{{ url_for('admin.approve_user', user_id=u.id) }}" class="btn btn-sm btn-success">Approve</a>
+          {% endif %}
+          <a href="{{ url_for('admin.delete_user', user_id=u.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

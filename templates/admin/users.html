@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="mb-4">Users & Merchants</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>User Id</th>
+      <th>Username</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users + merchants %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.role.title() }}</td>
+      <td>{{ 'Approved' if user.approved else 'Pending' }}</td>
+      <td>
+        {% if not user.approved %}
+        <a href="{{ url_for('admin.approve_user', user_id=user.id) }}" class="btn btn-sm btn-success">Approve</a>
+        {% endif %}
+        <a href="{{ url_for('admin.delete_user', user_id=user.id) }}" class="btn btn-sm btn-danger">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary mt-3">← Back to Dashboard</a>
+{% endblock %}

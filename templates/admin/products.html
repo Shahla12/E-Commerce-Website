@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="mb-4">All Products</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price (₹)</th>
+      <th>Stock</th>
+      <th>Merchant ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>{{ product.name }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.stock }}</td>
+      <td>{{ product.merchant_id }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary mt-3">← Back to Dashboard</a>
+{% endblock %}

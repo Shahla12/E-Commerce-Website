@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="mb-4">Available Products</h2>
+
+<div class="row">
+  {% for p in products %}
+  <div class="col-md-4">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">{{ p.name }}</h5>
+        <p class="card-text">₹{{ p.price }} | Stock: {{ p.stock }}</p>
+        
+        {% if current_user.is_authenticated and current_user.role == 'user' %}
+        
+          <!-- Add to Cart Form -->
+          <form method="POST" action="{{ url_for('user.add_to_cart', product_id=p.id) }}" class="mb-2">
+            <input type="number" name="quantity" value="1" min="1" max="{{ p.stock }}" class="form-control mb-2" required>
+            <button type="submit" class="btn btn-primary w-100">Add to Cart</button>
+          </form>
+
+          <!-- Buy Now Link (GET Request) -->
+          <a href="{{ url_for('user.buy_now', product_id=p.id) }}" class="btn btn-success w-100">Buy Now</a>
+
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
